@@ -54,11 +54,8 @@ listCountriesButton.addEventListener('click', function () {
 
 
 // opdracht 2 Steenbokken!!
-const dmyString = randomPersonData.map(person => person.birthday.dmyString)
-
-console.log(dmyString)
-
-const checkCapriCorn = (dmyString) => {
+const checkCapriCorn = (woman) => {
+    const dmyString = woman.birthday.dmy; // new
     const day = dmyString.slice(0, 2);
     const month = dmyString.slice(3, 5);
     if (parseInt(month) == 12 && parseInt(day) >= 22 || parseInt(month) == 1 && parseInt(day) <= 19) {
@@ -68,235 +65,109 @@ const checkCapriCorn = (dmyString) => {
     }
 };
 
-const capriCornCheck = () => {
-    if (checkCapriCorn) {
-        checkCapriCorn == true
-        return true
-    }
-}
-console.log(checkCapriCorn())
-
-
-const getPersons = () => {
-    let capricornWomen = [];
-    randomPersonData.forEach(element => {
-        if (element.gender === "female" && parseInt(element.birthday.dmy.slice(-4)) < 1990 && checkCapriCorn(element.birthday.dmy) == true) {
-            capricornWomen.push(`${element.name} ${element.surname}` +
-                `<img src="${element.photo}" alt="picture>`);
-            capricornWomen.push(`${element.name} ${element.surname} ${element.photo}`);
-        } else {
-            return;
-        }
-    });
-    addArrayDataToList(capricornWomen)
-}
-
-
-
-const getWomenOver30 = () => randomPersonData
+const getCapricornWomenOver30 = () => randomPersonData
     .filter(woman => woman.gender === 'female')
     .filter(woman => woman.age = parseInt(woman.birthday.dmy.slice(-4)) < 1990)
-    .map(checkCapriCorn() = true)
+    .filter(woman => checkCapriCorn(woman))
 
-console.log(getWomenOver30(randomPersonData))
 
-getCapricornWomenover30 = () => {
-    getWomenOver30()
-    addArrayDataToList(getCapricornWomenover30)
+const getCapricornFunction = getCapricornWomenOver30()
+// console.log(getCapricornFunction)
+
+
+const getCapricornWomenOver30Names = getCapricornFunction.map(woman => woman = woman.name + ' ' + woman.surname)
+// console.log(getCapricornWomenOver30Names)
+
+displayCapricornWomen30 = () => {
+    clearList();
+    getCapricornWomenOver30Names.forEach(element => {
+        let img = document.createElement('img');
+        const li = document.createElement("li");
+        const textnode = document.createTextNode(element);
+        li.appendChild(textnode);
+        li.appendChild(img)
+        results.appendChild(li);
+    })
 }
-getCapricornWomenover30()
 
-
-
-// const getStarSign = (month, day) => {
-//     // Normally adding {} to if statements is better but here's an exception.
-//     if (month === 1 && day <= 20) return CAPRICORN;
-//     if (month === 1 && day >= 21) return AQUARIUS;
-//     if (month === 2 && day <= 19) return AQUARIUS;
-//     if (month === 2 && day >= 20) return PISCES;
-//     if (month === 3 && day <= 20) return PISCES;
-//     if (month === 3 && day >= 21) return ARIES;
-//     if (month === 4 && day <= 20) return ARIES;
-//     if (month === 4 && day >= 21) return TAURUS;
-//     if (month === 5 && day <= 20) return TAURUS;
-//     if (month === 5 && day >= 21) return GEMINI;
-//     if (month === 6 && day <= 21) return GEMINI;
-//     if (month === 6 && day >= 22) return CANCER;
-//     if (month === 7 && day <= 22) return CANCER;
-//     if (month === 7 && day >= 23) return LEO;
-//     if (month === 8 && day <= 23) return LEO;
-//     if (month === 8 && day >= 24) return VIRGO;
-//     if (month === 9 && day <= 21) return VIRGO;
-//     if (month === 9 && day >= 22) return LIBRA;
-//     if (month === 10 && day <= 22) return LIBRA;
-//     if (month === 10 && day >= 23) return SCORPIO;
-//     if (month === 11 && day <= 21) return SCORPIO;
-//     if (month === 11 && day >= 22) return SAGGITARIUS;
-//     if (month === 12 && day <= 21) return SAGGITARIUS;
-//     if (month === 12 && day >= 22) return CAPRICORN;
-// };
-
-// const addStarSign = person => {
-//     const month = parseInt(person => person.birthday.dmy.split("/")[1]); // 1..12
-//     const day = parseInt(person => person.birthday.dmy.split("/")[0]); // 1..31
-//     person.sign = getStarSign(month, day);
-//     return person;
-// };
-
-
-
-
-
-
-// const isWoman = person => person.gender === "female";
-
-// const isOver30 = person => person.age > 30;
-
-// const isCapricorn = person => person.sign === CAPRICORN;
-
-// const sortByName = (person1, person2) =>
-//     sort_helper(person1.name > person2.name);
-
-// const getCapricornWomen = personData =>
-//     personData
-//         .filter(isWoman)
-//         .filter(isOver30)
-//         .map(addStarSign)
-//         .filter(isCapricorn)
-//         .sort(sortByName);
-
-// const generateCapricornWomanHTML = ({
-//     name,
-//     surname,
-//     photo,
-//     age,
-//     birthday,
-// }) => {
-//     // Add age and birthday to make manual checking easier.
-//     const nameSpan = document.createElement("span");
-//     nameSpan.innerHTML = `${name} ${surname}`;
-
-//     const photoSpan = document.createElement("span");
-//     photoSpan.innerHTML = photo;
-
-//     const ageSpan = document.createElement("span");
-//     ageSpan.innerHTML = age;
-
-//     const birthdaySpan = document.createElement("span");
-//     birthdaySpan.innerHTML = birthday.dmy;
-
-//     const li = document.createElement("li");
-//     li.appendChild(nameSpan);
-//     li.appendChild(photoSpan);
-//     li.appendChild(ageSpan);
-//     li.appendChild(birthdaySpan);
-
-//     return li;
-// };
-
-// const displayCapricornWomen = () => {
-//     getCapricornWomen(randomPersonData)
-//         .map(generateCapricornWomanHTML)
-//         .forEach(addToResultList);
-// };
-
-// document
-//     .querySelector(".capricorn_women")
-//     .addEventListener("click", displayCapricornWomen);
-
-
-
-
-
+capricornWomenButton.addEventListener('click', function () {
+    displayCapricornWomen30(getCapricornWomenOver30Names)
+})
 
 
 
 
 
 // oude creditcards
-
-// const sortByDate = (oudeCreditcards) => {
-//     const sortedByExpirationDate = oudeCreditcards.sort((a, b) => {
-//         a = a.credit_card.expiration.split('/');
-//         b = b.credit_card.expiration.split('/');
-//         // console.log(b)
-//         return a[1] - b[1] || a[0] - b[0];
-//     });
-//     return sortedByExpirationDate
-// };
-// console.log(sortByDate(randomPersonData))
-
-// const filterArrayByExpiration = (array, year) => {
-//     let stringThisYear = String(year);
-//     stringThisYear = stringThisYear.slice(-2);
-//     year++;
-//     let stringNextYear = String(year);
-//     stringNextYear = stringNextYear.slice(-2);
-//     const filteredByExpiration = array.filter(person => parseInt(person.credit_card.expiration.slice(-2)) === parseInt(stringThisYear) ||
-//         parseInt(person.credit_card.expiration.slice(-2)) === parseInt(stringNextYear));
-//     return filteredByExpiration;
-// }
-// console.log(filterArrayByExpiration(randomPersonData))
-
-const convertCCtoDate = () => {
-    const creditCardDateToString = person => person.credit_card.expiration.split("/");
-    // console.log(creditCardDateToString)
-    const creditCardDate = new Date(
-        parseInt("20" + creditCardDateToString[1]),
-        parseInt(creditCardDateToString[0])
-    );
-    return creditCardDate;
+const getCreditcardDate = (person) => {
+    const creditCardDateToString = person.credit_card.expiration.split("/");
+    const month = parseInt(creditCardDateToString[0]) - 1;
+    const year = parseInt("20" + creditCardDateToString[1]);
+    const creditCardDate = new Date(year, month);
+    return creditCardDate
 };
-console.log(convertCCtoDate(randomPersonData))
-
 
 const getOldCreditcards = () => {
     const now = new Date();
-    const oldCreditcardList = randomPersonData
-        .filter(person => person.age >= 18)
-        .filter(person => {
-            return (
-                convertCCtoDate(person) > now &&
-                convertCCtoDate(person).getFullYear() === now.getFullYear() + 1
-            );
-        })
-        .sort((a, b) => {
-            if (convertCCtoDate(a) < convertCCtoDate(b)) {
-                return -1;
-            }
-            if (convertCCtoDate(a) > convertCCtoDate(b)) {
-                return 1;
-            }
-
-            // names must be equal
-            return 0;
-        });
-    return oldCreditcardList;
-};
-
-const renderOldCreditcards = (oldCreditcardList) => {
-    results.innerHTML = " ";
-    oldCreditcardList.map((person) => {
-        const listItemElement = document.createElement("li");
-        listItemElement.innerHTML = `Name: ${person.name} ${person.surname}. Phone: ${person.phone}. Credit Card Number:${person.credit_card.number}. Expiration date: ${person.credit_card.expiration}`;
-        results.appendChild(listItemElement);
-        return listItemElement;
+    const adultPeople = randomPersonData.filter(person => person.age >= 18);
+    const peopleWithOldCreditcards = adultPeople.filter(person => {
+        return (
+            getCreditcardDate(person) > now &&
+            getCreditcardDate(person).getFullYear() === now.getFullYear() + 1
+        );
+    })
+    const sortPeopleCreditcards = peopleWithOldCreditcards.sort((a, b) => {
+        if (getCreditcardDate(a) < getCreditcardDate(b)) {
+            return -1;
+        }
+        if (getCreditcardDate(a) > getCreditcardDate(b)) {
+            return 1;
+        }
+        return 0;
     });
+    return sortPeopleCreditcards;
 };
+
+const listOldCreditcards = getOldCreditcards()
+const namesListOldCreditcards = listOldCreditcards.map(person => person = `Name: ${person.name} ${person.surname}. Phone: ${person.phone}. Credit Card Number:${person.credit_card.number}. Expiration date: ${person.credit_card.expiration}`)
+
+const displayOldCreditcards = () => {
+    clearList();
+    namesListOldCreditcards.forEach(person => {
+        const li = document.createElement("li");
+        const textnode = document.createTextNode(person);
+        li.appendChild(textnode);
+        results.appendChild(li);
+    })
+}
 
 creditCardButton.addEventListener("click", () => {
-    results.innerHTML = "";
-    renderOldCreditcards(getOldCreditcards());
+    displayOldCreditcards(namesListOldCreditcards);
 });
 
 
+
+
+
+
 // Meeste mensen
-// const sortByCountry = (randomPersonData) => {
-//     let count = {};
-//     randomPersonData.forEach(element => {
-//         count[element.region] = (count[element.region] || 0) + 1;
-//     });
-//     console.log(count);
+
+// let count = {};
+// let countedPeopleInCountry = randomPersonData.forEach(element => {
+//     count[element.region] = (count[element.region] || 0) + 1;
+// });
+
+const sortByCountry = (person) => {
+    let count = {};
+    randomPersonData.forEach(element => {
+        count[element.region] = (count[element.region] || 0) + 1;
+    });
+    console.log(count)
+    return sortByCountry()
+}
+// console.log(countedPeopleInCountry)
+// console.log(sortByCountry())
+
 //     const sortable = Object.fromEntries(
 //         Object.entries(count).sort(([, a], [, b]) => b - a)
 //     );
@@ -311,38 +182,50 @@ creditCardButton.addEventListener("click", () => {
 // });
 // // sortByCountry(randomPersonData);
 
+const countryList = randomPersonData.map(person => person.region);
+
+const uniqueMostCountries = [...new Set(countryList)]
+console.log(uniqueMostCountries)
+
+// const getMostPeoplePerCountry = () => {
+//     const countryList = randomPersonData.map((person) => {
+//         return person.region;
+//     });
+//     const uniqueCountries = [...new Set(countryList)]
+//     console.log(uniqueCountries)
+
+// const count = Array.from(
+//     countryList.reduce((unique, item) => unique.set(item, (unique.get(item) || 0) + 1), new Map()),
+//     ([country, count]) => ({ country, count })
+// );
+
+sortedMostCoutries = uniqueMostCountries.sort((a, b) => {
+    if (a.country < b.country) {
+        return -1;
+    }
+    if (a.country > b.country) {
+        return 1;
+    }
+    return 0;
+});
 
 
-const getMostPeoplePerCountry = () => {
-    const countryList = randomPersonData.map((person) => {
-        return person.region;
+console.log(sortedMostCoutries)
+
+const renderMostPeopleList = () => {
+    clearList();
+    uniqueMostCountries.forEach(element => {
+        let li = document.createElement("li");
+        let textnode = document.createTextNode(element);
+        li.appendChild(textnode);
+        li.innerHTML = element;
+        results.appendChild(li);
     });
 
-    const count = Array.from(
-        countryList.reduce((unique, item) => unique.set(item, (unique.get(item) || 0) + 1), new Map()),
-        ([country, count]) => ({ country, count })
-    );
 
-    count.sort((a, b) => {
-        if (a.country < b.country) {
-            return -1;
-        }
-        if (a.country > b.country) {
-            return 1;
-        }
-        return 0;
-    });
-    return count;
 };
+console.log(renderMostPeopleList(uniqueMostCountries))
 
-const renderMostPeopleList = (mostPeoplePerCountry) => {
-    results.innerHTML = " ";
-    getMostPeoplePerCountry()
-    mostPeoplePerCountry.map((listItem) => {
-        const listItemElement = document.createElement("li");
-        listItemElement.innerHTML = `${listItem.country}: ${listItem.count}`;
-        results.appendChild(listItemElement);
-        return listItemElement;
-    });
-};
-renderMostPeopleList(randomPersonData)
+countryMostPeopleButton.addEventListener("click", () => {
+    renderMostPeopleList(uniqueMostCountries);
+});
